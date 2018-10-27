@@ -58,8 +58,17 @@ def make_new_student(first_name, last_name, github):
 
 def get_project_by_title(title):
     """Given a project title, print information about the project."""
-    pass
 
+    QUERY = """
+        SELECT * FROM projects
+        WHERE title = :title
+        """
+
+    db_cursor = db.session.execute(QUERY, {'title': title})
+
+    row = db_cursor.fetchone()
+
+    print("Project Title: {}\nProject Description: {}".format(row[1], row[2]))
 
 def get_grade_by_github_title(github, title):
     """Print grade student received for a project."""
@@ -93,6 +102,10 @@ def handle_input():
         elif command == "new_student":
             first_name, last_name, github = args  # unpack!
             make_new_student(first_name, last_name, github)
+
+        elif command == "title":
+            title = " ".join(args)
+            get_project_by_title(title)
 
         else:
             if command != "quit":
