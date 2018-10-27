@@ -88,8 +88,19 @@ def get_grade_by_github_title(github, title):
 
 def assign_grade(github, title, grade):
     """Assign a student a grade on an assignment and print a confirmation."""
-    p
 
+    QUERY = """
+        INSERT INTO grades (student_github, project_title, grade)
+        VALUES (:github, :title, :grade)
+        """
+
+    db.session.execute(QUERY, {'github': github,
+                               'title' : title,
+                               'grade' : grade})
+
+    db.session.commit()
+
+    print("Successfully added grade {} to {}".format(grade, github))
 
 def handle_input():
     """Main loop.
@@ -123,6 +134,11 @@ def handle_input():
             project = args[1]
             get_grade_by_github_title(github, project)
 
+        elif command == "assign":
+            title = args[1]
+            github = args[0]
+            grade = args[2]
+            assign_grade(github, title, grade)
 
         else:
             if command != "quit":
@@ -132,7 +148,7 @@ def handle_input():
 if __name__ == "__main__":
     connect_to_db(app)
 
-#    handle_input()
+    handle_input()
 
     # To be tidy, we close our database connection -- though,
     # since this is where our program ends, we'd quit anyway.
