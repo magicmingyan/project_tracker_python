@@ -3,7 +3,7 @@
 A front-end for a database that allows users to work with students, class
 projects, and the grades students receive in class projects.
 """
-import pdb
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
@@ -72,7 +72,7 @@ def get_project_by_title(title):
 
 def get_grade_by_github_title(github, title):
     """Print grade student received for a project."""
- #   pdb.set_trace()
+
     QUERY = """
         SELECT project_title, grade FROM grades
         WHERE project_title = :title
@@ -88,7 +88,7 @@ def get_grade_by_github_title(github, title):
 
 def assign_grade(github, title, grade):
     """Assign a student a grade on an assignment and print a confirmation."""
-    pass
+    p
 
 
 def handle_input():
@@ -132,7 +132,7 @@ def handle_input():
 if __name__ == "__main__":
     connect_to_db(app)
 
-    handle_input()
+#    handle_input()
 
     # To be tidy, we close our database connection -- though,
     # since this is where our program ends, we'd quit anyway.
