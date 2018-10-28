@@ -33,7 +33,10 @@ def get_student_by_github(github):
 
     row = db_cursor.fetchone()
 
-    print("Student: {} {}\nGitHub account: {}".format(row[0], row[1], row[2]))
+    if row == None:
+        print("Student doesn't exist")
+    else:
+        print("Student: {} {}\nGitHub account: {}".format(row[0], row[1], row[2]))
 
 
 def make_new_student(first_name, last_name, github):
@@ -68,7 +71,10 @@ def get_project_by_title(title):
 
     row = db_cursor.fetchone()
 
-    print("Project Title: {}\nProject Description: {}".format(row[1], row[2]))
+    if row == None:
+        print("Project doesn't exist")
+    else:
+        print("Project Title: {}\nProject Description: {}".format(row[1], row[2]))
 
 def get_grade_by_github_title(github, title):
     """Print grade student received for a project."""
@@ -129,9 +135,12 @@ def get_all_grades(github):
 
     result = db_cursor.fetchall()
 
-    print("Grades for {} are".format(github))
-    for item in result:
-        print(str(item[0]) + " : " + str(item[1]))
+    if len(result) == 0:
+        print("Student does not exist.")
+    else:
+        print("Grades for {} are".format(github))
+        for item in result:
+            print(str(item[0]) + " : " + str(item[1]))
 
 def handle_input():
     """Main loop.
