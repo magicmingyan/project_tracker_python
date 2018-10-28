@@ -153,7 +153,7 @@ def handle_input():
 
     while command != "quit":
         input_string = input("HBA Database> ")
-        tokens = input_string.split()
+        tokens = input_string.split("|")
         command = tokens[0]
         args = tokens[1:]
 
@@ -182,8 +182,8 @@ def handle_input():
 
         elif command == "project":
             title = args[0]
-            description = " ".join(args[1:-1])
-            max_grade = args[-1]
+            description = args[1]
+            max_grade = args[2]
             add_project(title, description, max_grade)
 
         elif command == 'get':
