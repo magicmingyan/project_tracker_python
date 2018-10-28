@@ -117,6 +117,22 @@ def add_project(title, description, maximum_grade):
 
     print("Successfully added new project: {}".format(title))
 
+def get_all_grades(github):
+    """ get all grades."""
+
+    QUERY = """
+        SELECT project_title, grade FROM grades
+        WHERE student_github = :github
+        """
+
+    db_cursor = db.session.execute(QUERY, {'github': github})
+
+    result = db_cursor.fetchall()
+
+    print("Grades for {} are".format(github))
+    for item in result:
+        print(str(item[0]) + " : " + str(item[1]))
+
 def handle_input():
     """Main loop.
 
@@ -160,6 +176,10 @@ def handle_input():
             description = " ".join(args[1:-1])
             max_grade = args[-1]
             add_project(title, description, max_grade)
+
+        elif command == 'get':
+            github = args[0]
+            get_all_grades(github)
 
         else:
             if command != "quit":
